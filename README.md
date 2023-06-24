@@ -12,6 +12,8 @@
 
 В данном маркетплейсе продавец работает на основе моделей [FBS И DBS](https://dzen.ru/a/Y8ZxDdMmXz8CJkRV).
 
+Все основные токены и номера id можно получить используя эту [инструкцию](https://yandex.ru/support/marketplace/orders/fbs/settings/api.html).
+
 Требования:
 + [market_token](https://yandex.ru/dev/market/partner-api/doc/ru/)
 + [campaign_fbs_id](https://yandex.ru/dev/market/partner-api/doc/ru/overview/fbs)
