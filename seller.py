@@ -113,7 +113,7 @@ def update_price(prices: list, client_id, seller_token):
 
 
 def update_stocks(stocks: list, client_id, seller_token):
-    """Позволяет изменить информацию о количестве товара в наличии на сайте Озон.
+    """Позволяет изменить количество товара в наличии на сайте Озон.
 
     Args:
         stocks(list): Список с остатками продукции

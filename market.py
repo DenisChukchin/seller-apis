@@ -11,6 +11,21 @@ logger = logging.getLogger(__file__)
 
 
 def get_product_list(page, campaign_id, access_token):
+    """Отправим запрос на Яндекс и получим информацию о товарах в каталоге.
+
+    Args:
+        page(str): Идентификатор страницы c результатами
+        campaign_id(str): Идентификатор магазина продавца
+        access_token(str): API токен продавца
+
+    Results:
+        dict: Массив данных JSON с информацией о товарах в каталоге продавца
+
+    Raises:
+        AttributeError: Если отсутствует или введен неправильный аргумент функции
+        ReadTimeout: Превышено время ожидания
+        ConnectionError: Ошибка соединения
+    """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
         "Content-Type": "application/json",
@@ -30,6 +45,21 @@ def get_product_list(page, campaign_id, access_token):
 
 
 def update_stocks(stocks, campaign_id, access_token):
+    """Позволяет изменить количество товара в наличии на сайте ЯндексМаркет.
+
+    Args:
+        stocks(list): Список с остатками продукции
+        campaign_id(str): Идентификатор магазина продавца
+        access_token(str): API токен продавца
+
+    Returns:
+        response_object(dict): Словарь со статусом подтверждения обновления
+
+    Raises:
+        AttributeError: Если отсутствует или введен неправильный аргумент функции
+        ReadTimeout: Превышено время ожидания
+        ConnectionError: Ошибка соединения
+    """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
         "Content-Type": "application/json",
@@ -46,6 +76,21 @@ def update_stocks(stocks, campaign_id, access_token):
 
 
 def update_price(prices, campaign_id, access_token):
+    """Позволяет изменить цену одного или нескольких товаров продавца на сайте ЯндексМаркет.
+
+    Args:
+        prices(list): Список с новыми ценами продукции продавца
+        campaign_id(str): Идентификатор магазина продавца
+        access_token(str): API токен продавца
+
+    Returns:
+        response_object(dict): Словарь со статусом подтверждения обновления
+
+    Raises:
+        AttributeError: Если отсутствует или введен неправильный аргумент функции
+        ReadTimeout: Превышено время ожидания
+        ConnectionError: Ошибка соединения
+    """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
         "Content-Type": "application/json",
@@ -62,7 +107,18 @@ def update_price(prices, campaign_id, access_token):
 
 
 def get_offer_ids(campaign_id, market_token):
-    """Получить артикулы товаров Яндекс маркета"""
+    """Получить из массива данных JSON артикулы товаров продавца.
+
+    Args:
+        campaign_id(str): Идентификатор магазина продавца
+        market_token(str): API токен продавца
+
+    Results:
+        offer_ids(list): Список с артикулами товара продавца
+
+    Raises:
+        AttributeError: Если отсутствует или введен неправильный аргумент функции
+    """
     page = ""
     product_list = []
     while True:
@@ -78,6 +134,22 @@ def get_offer_ids(campaign_id, market_token):
 
 
 def create_stocks(watch_remnants, offer_ids, warehouse_id):
+    """Скорректируем остатки продукции учитывая реальное наличие у продавца.
+
+    Args:
+        watch_remnants(dict): Словарь, который содержит актуальные артикулы,
+            остатки и цены с сайта часов
+        offer_ids(list): Список с артикулами товара продавца с ЯндексМаркет
+        warehouse_id(int): Идентификатор хранения товара на складе маркетплейса
+            или на складе поставщика
+
+    Returns:
+        stocks(list): Сформированный список, в котором учитываются
+            реальные остатки продукции для обновления на маркетплейс ЯндексМаркет
+
+    Raises:
+        AttributeError: Если отсутствует или введен неправильный аргумент функции
+    """
     # Уберем то, что не загружено в market
     stocks = list()
     date = str(datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z")
@@ -123,6 +195,20 @@ def create_stocks(watch_remnants, offer_ids, warehouse_id):
 
 
 def create_prices(watch_remnants, offer_ids):
+    """Скорректируем цену на продукцию, которая берется с сайта часов.
+
+    Args:
+        watch_remnants(dict): Словарь, который содержит актуальные артикулы, остатки и цены
+            с сайта часов
+        offer_ids(list): Список с артикулами товара продавца с ЯндексМаркет
+
+    Returns:
+        prices(list): Сформированный список, в котором цена преображается в нужный формат
+            для обновления на маркетплейс ЯндексМаркет
+
+    Raises:
+        AttributeError: Если отсутствует или введен неправильный аргумент функции
+    """
     prices = []
     for watch in watch_remnants:
         if str(watch.get("Код")) in offer_ids:
@@ -143,6 +229,19 @@ def create_prices(watch_remnants, offer_ids):
 
 
 async def upload_prices(watch_remnants, campaign_id, market_token):
+    """Загружаем на маркетплейс ЯндексМаркет обновленный ценник на товары продавца.
+
+    Args:
+        watch_remnants(dict): Словарь, который содержит актуальные артикулы, остатки и цены
+        campaign_id(str): Идентификатор магазина продавца
+        market_token(str): API токен продавца
+
+    Returns:
+        prices(list): Список со статусами подтверждения обновления
+
+     Raises:
+        AttributeError: Если отсутствует или введен неправильный аргумент функции
+    """
     offer_ids = get_offer_ids(campaign_id, market_token)
     prices = create_prices(watch_remnants, offer_ids)
     for some_prices in list(divide(prices, 500)):
@@ -151,6 +250,20 @@ async def upload_prices(watch_remnants, campaign_id, market_token):
 
 
 async def upload_stocks(watch_remnants, campaign_id, market_token, warehouse_id):
+    """Загружаем на маркетплейс ЯндексМаркет информацию о количестве товара в наличии у продавца.
+
+    Args:
+        watch_remnants(dict): Словарь, который содержит актуальные артикулы, остатки и цены
+        campaign_id(str): Идентификатор магазина продавца
+        market_token(str): API токен продавца
+
+    Returns:
+        not_empty(list): Список в котором указана информация о товаре,
+            который остался в запасе
+        stocks(list): Список с остатками продукции
+     Raises:
+        AttributeError: Если отсутствует или введен неправильный аргумент функции
+    """
     offer_ids = get_offer_ids(campaign_id, market_token)
     stocks = create_stocks(watch_remnants, offer_ids, warehouse_id)
     for some_stock in list(divide(stocks, 2000)):
