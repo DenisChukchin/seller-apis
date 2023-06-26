@@ -23,9 +23,8 @@ def get_product_list(last_id, client_id, seller_token):
         dict: Словарь с информацией о товарах
 
     Raises:
-        AttributeError: Если отсутствует или введен неправильный аргумент функции
-        ReadTimeout: Превышено время ожидания
-        ConnectionError: Ошибка соединения
+        SyntaxError: Если отсутствует или введен неправильный аргумент функции
+        requests.exceptions.Error: Возможны исключения
 
     Example:
         >>> env = Env()
@@ -61,7 +60,8 @@ def get_offer_ids(client_id, seller_token):
         offer_ids(list): Список с артикулами товара продавца
 
     Raises:
-        AttributeError: Если отсутствует или введен неправильный аргумент функции
+        SyntaxError: Если отсутствует или введен неправильный аргумент функции
+        requests.exceptions.Error: Возможны исключения
 
     Example:
         >>> env = Env()
@@ -97,9 +97,8 @@ def update_price(prices: list, client_id, seller_token):
             возможные ошибки
 
     Raises:
-        AttributeError: Если отсутствует или введен неправильный аргумент функции
-        ReadTimeout: Превышено время ожидания
-        ConnectionError: Ошибка соединения
+        SyntaxError: Если отсутствует или введен неправильный аргумент функции
+        requests.exceptions.Error: Возможны исключения
     """
     url = "https://api-seller.ozon.ru/v1/product/import/prices"
     headers = {
@@ -126,9 +125,8 @@ def update_stocks(stocks: list, client_id, seller_token):
             возможные ошибки
 
     Raises:
-        AttributeError: Если отсутствует или введен неправильный аргумент функции
-        ReadTimeout: Превышено время ожидания
-        ConnectionError: Ошибка соединения
+        SyntaxError: Если отсутствует или введен неправильный аргумент функции
+        requests.exceptions.Error: Возможны исключения
     """
     url = "https://api-seller.ozon.ru/v1/product/import/stocks"
     headers = {
@@ -148,8 +146,7 @@ def download_stock():
         watch_remnants(dict): Словарь, который содержит актуальные артикулы, остатки и цены
 
     Raises:
-        ReadTimeout: Превышено время ожидания
-        ConnectionError: Ошибка соединения
+        TypeError: Ошибка файла ostatki
     """
     # Скачать остатки с сайта
     casio_url = "https://timeworld.ru/upload/files/ostatki.zip"
@@ -183,7 +180,7 @@ def create_stocks(watch_remnants, offer_ids):
             реальные остатки продукции для обновления на маркетплейс Озон
 
     Raises:
-        AttributeError: Если отсутствует или введен неправильный аргумент функции
+        SyntaxError: Если отсутствует или введен неправильный аргумент функции
     """
     # Уберем то, что не загружено в seller
     stocks = []
@@ -217,7 +214,7 @@ def create_prices(watch_remnants, offer_ids):
             для обновления на маркетплейс Озон
 
     Raises:
-        AttributeError: Если отсутствует или введен неправильный аргумент функции
+        SyntaxError: Если отсутствует или введен неправильный аргумент функции
     """
     prices = []
     for watch in watch_remnants:
@@ -260,9 +257,8 @@ def divide(lst: list, n: int):
         list: Список, который разделен на n-частей
 
     Raises:
-        ZeroDivisionError: На ноль делить нельзя
         ValueError: n must be int, not str
-        AttributeError: Если отсутствует или введен неправильный аргумент функции
+        SyntaxError: Если отсутствует или введен неправильный аргумент функции
     """
     for i in range(0, len(lst), n):
         yield lst[i : i + n]
@@ -282,7 +278,7 @@ async def upload_prices(watch_remnants, client_id, seller_token):
             возможные ошибки
 
      Raises:
-        AttributeError: Если отсутствует или введен неправильный аргумент функции
+        SyntaxError: Если отсутствует или введен неправильный аргумент функции
     """
     offer_ids = get_offer_ids(client_id, seller_token)
     prices = create_prices(watch_remnants, offer_ids)
@@ -307,7 +303,7 @@ async def upload_stocks(watch_remnants, client_id, seller_token):
             возможные ошибки
 
      Raises:
-        AttributeError: Если отсутствует или введен неправильный аргумент функции
+        SyntaxError: Если отсутствует или введен неправильный аргумент функции
     """
     offer_ids = get_offer_ids(client_id, seller_token)
     stocks = create_stocks(watch_remnants, offer_ids)
