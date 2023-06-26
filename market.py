@@ -19,7 +19,7 @@ def get_product_list(page, campaign_id, access_token):
         access_token(str): API токен продавца
 
     Results:
-        dict: Массив данных JSON с информацией о товарах в каталоге продавца
+        dict: Словарь с информацией о товарах
 
     Raises:
         AttributeError: Если отсутствует или введен неправильный аргумент функции
@@ -107,7 +107,7 @@ def update_price(prices, campaign_id, access_token):
 
 
 def get_offer_ids(campaign_id, market_token):
-    """Получить из массива данных JSON артикулы товаров продавца.
+    """Получить из словаря артикулы товаров продавца.
 
     Args:
         campaign_id(str): Идентификатор магазина продавца

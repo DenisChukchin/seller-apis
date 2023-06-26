@@ -20,7 +20,7 @@ def get_product_list(last_id, client_id, seller_token):
         seller_token(str): API-ключ
 
     Returns:
-        dict: Результат запроса в виде массива данных JSON
+        dict: Словарь с информацией о товарах
 
     Raises:
         AttributeError: Если отсутствует или введен неправильный аргумент функции
@@ -51,7 +51,7 @@ def get_product_list(last_id, client_id, seller_token):
 
 
 def get_offer_ids(client_id, seller_token):
-    """Из массива данных JSON получить артикулы товаров магазина озон.
+    """Из словаря получить артикулы товаров магазина озон.
 
     Args:
         client_id(str): Идентификатор клиента
@@ -92,7 +92,7 @@ def update_price(prices: list, client_id, seller_token):
         seller_token(str): API-ключ
 
     Returns:
-        dict: Словарь с массивом данных JSON, в котором указаны данные, например,
+        dict: Словарь в котором указаны данные, например,
             как идентификатор товара, артикул товара, подтверждение об обновлении и
             возможные ошибки
 
@@ -121,7 +121,7 @@ def update_stocks(stocks: list, client_id, seller_token):
         seller_token(str): API-ключ
 
     Returns:
-        dict: Словарь с массивом данных JSON, в котором указаны данные, например,
+        dict: Словарь в котором указаны данные, например,
             как идентификатор товара, артикул товара, подтверждение об обновлении и
             возможные ошибки
 
