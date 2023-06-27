@@ -23,7 +23,6 @@ def get_product_list(last_id, client_id, seller_token):
         dict: Словарь с информацией о товарах
 
     Raises:
-        SyntaxError: Если отсутствует или введен неправильный аргумент функции
         requests.exceptions.Error: Возможны исключения
 
     Example:
@@ -60,7 +59,6 @@ def get_offer_ids(client_id, seller_token):
         offer_ids(list): Список с артикулами товара продавца
 
     Raises:
-        SyntaxError: Если отсутствует или введен неправильный аргумент функции
         requests.exceptions.Error: Возможны исключения
 
     Example:
@@ -97,7 +95,6 @@ def update_price(prices: list, client_id, seller_token):
             возможные ошибки
 
     Raises:
-        SyntaxError: Если отсутствует или введен неправильный аргумент функции
         requests.exceptions.Error: Возможны исключения
     """
     url = "https://api-seller.ozon.ru/v1/product/import/prices"
@@ -125,7 +122,6 @@ def update_stocks(stocks: list, client_id, seller_token):
             возможные ошибки
 
     Raises:
-        SyntaxError: Если отсутствует или введен неправильный аргумент функции
         requests.exceptions.Error: Возможны исключения
     """
     url = "https://api-seller.ozon.ru/v1/product/import/stocks"
@@ -178,9 +174,6 @@ def create_stocks(watch_remnants, offer_ids):
     Returns:
         stocks(list): Сформированный список, в котором учитываются
             реальные остатки продукции для обновления на маркетплейс Озон
-
-    Raises:
-        SyntaxError: Если отсутствует или введен неправильный аргумент функции
     """
     # Уберем то, что не загружено в seller
     stocks = []
@@ -212,9 +205,6 @@ def create_prices(watch_remnants, offer_ids):
     Returns:
         prices(list): Сформированный список, в котором цена преображается в нужный формат
             для обновления на маркетплейс Озон
-
-    Raises:
-        SyntaxError: Если отсутствует или введен неправильный аргумент функции
     """
     prices = []
     for watch in watch_remnants:
@@ -258,7 +248,6 @@ def divide(lst: list, n: int):
 
     Raises:
         ValueError: n must be int, not str
-        SyntaxError: Если отсутствует или введен неправильный аргумент функции
     """
     for i in range(0, len(lst), n):
         yield lst[i : i + n]
@@ -276,9 +265,6 @@ async def upload_prices(watch_remnants, client_id, seller_token):
         prices(list): Список из словарей, в котором указаны данные, такие как
             идентификатор товара, артикул товара, подтверждение об обновлении и
             возможные ошибки
-
-     Raises:
-        SyntaxError: Если отсутствует или введен неправильный аргумент функции
     """
     offer_ids = get_offer_ids(client_id, seller_token)
     prices = create_prices(watch_remnants, offer_ids)
@@ -301,9 +287,6 @@ async def upload_stocks(watch_remnants, client_id, seller_token):
         stocks(list): Список из словарей, в котором указаны данные, такие как
             идентификатор товара, артикул товара, подтверждение об обновлении и
             возможные ошибки
-
-     Raises:
-        SyntaxError: Если отсутствует или введен неправильный аргумент функции
     """
     offer_ids = get_offer_ids(client_id, seller_token)
     stocks = create_stocks(watch_remnants, offer_ids)

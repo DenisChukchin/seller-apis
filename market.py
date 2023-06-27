@@ -22,7 +22,6 @@ def get_product_list(page, campaign_id, access_token):
         dict: Словарь с информацией о товарах
 
     Raises:
-        SyntaxError: Если отсутствует или введен неправильный аргумент функции
         requests.exceptions.Error: Возможны исключения
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
@@ -55,7 +54,6 @@ def update_stocks(stocks, campaign_id, access_token):
         response_object(dict): Словарь со статусом подтверждения обновления
 
     Raises:
-        SyntaxError: Если отсутствует или введен неправильный аргумент функции
         requests.exceptions.Error: Возможны исключения
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
@@ -85,7 +83,6 @@ def update_price(prices, campaign_id, access_token):
         response_object(dict): Словарь со статусом подтверждения обновления
 
     Raises:
-        SyntaxError: Если отсутствует или введен неправильный аргумент функции
         requests.exceptions.Error: Возможны исключения
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
@@ -112,9 +109,6 @@ def get_offer_ids(campaign_id, market_token):
 
     Results:
         offer_ids(list): Список с артикулами товара продавца
-
-    Raises:
-        SyntaxError: Если отсутствует или введен неправильный аргумент функции
     """
     page = ""
     product_list = []
@@ -143,9 +137,6 @@ def create_stocks(watch_remnants, offer_ids, warehouse_id):
     Returns:
         stocks(list): Сформированный список, в котором учитываются
             реальные остатки продукции для обновления на маркетплейс ЯндексМаркет
-
-    Raises:
-        SyntaxError: Если отсутствует или введен неправильный аргумент функции
     """
     # Уберем то, что не загружено в market
     stocks = list()
@@ -202,9 +193,6 @@ def create_prices(watch_remnants, offer_ids):
     Returns:
         prices(list): Сформированный список, в котором цена преображается в нужный формат
             для обновления на маркетплейс ЯндексМаркет
-
-    Raises:
-        SyntaxError: Если отсутствует или введен неправильный аргумент функции
     """
     prices = []
     for watch in watch_remnants:
@@ -235,9 +223,6 @@ async def upload_prices(watch_remnants, campaign_id, market_token):
 
     Returns:
         prices(list): Список со статусами подтверждения обновления
-
-     Raises:
-        SyntaxError: Если отсутствует или введен неправильный аргумент функции
     """
     offer_ids = get_offer_ids(campaign_id, market_token)
     prices = create_prices(watch_remnants, offer_ids)
@@ -258,8 +243,6 @@ async def upload_stocks(watch_remnants, campaign_id, market_token, warehouse_id)
         not_empty(list): Список в котором указана информация о товаре,
             который остался в запасе
         stocks(list): Список с остатками продукции
-     Raises:
-        SyntaxError: Если отсутствует или введен неправильный аргумент функции
     """
     offer_ids = get_offer_ids(campaign_id, market_token)
     stocks = create_stocks(watch_remnants, offer_ids, warehouse_id)
