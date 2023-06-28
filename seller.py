@@ -22,9 +22,6 @@ def get_product_list(last_id, client_id, seller_token):
     Returns:
         dict: Словарь с информацией о товарах
 
-    Raises:
-        requests.exceptions.Error: Возможны исключения
-
     Example:
         >>> env = Env()
         >>> get_product_list("", env.str("CLIENT_ID"), env.str("SELLER_TOKEN"))
@@ -58,9 +55,6 @@ def get_offer_ids(client_id, seller_token):
     Returns:
         offer_ids(list): Список с артикулами товара продавца
 
-    Raises:
-        requests.exceptions.Error: Возможны исключения
-
     Example:
         >>> env = Env()
         >>> get_offer_ids(, env.str("CLIENT_ID"), env.str("SELLER_TOKEN"))
@@ -93,9 +87,6 @@ def update_price(prices: list, client_id, seller_token):
         dict: Словарь в котором указаны данные, например,
             как идентификатор товара, артикул товара, подтверждение об обновлении и
             возможные ошибки
-
-    Raises:
-        requests.exceptions.Error: Возможны исключения
     """
     url = "https://api-seller.ozon.ru/v1/product/import/prices"
     headers = {
@@ -120,9 +111,6 @@ def update_stocks(stocks: list, client_id, seller_token):
         dict: Словарь в котором указаны данные, например,
             как идентификатор товара, артикул товара, подтверждение об обновлении и
             возможные ошибки
-
-    Raises:
-        requests.exceptions.Error: Возможны исключения
     """
     url = "https://api-seller.ozon.ru/v1/product/import/stocks"
     headers = {

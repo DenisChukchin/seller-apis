@@ -20,9 +20,6 @@ def get_product_list(page, campaign_id, access_token):
 
     Results:
         dict: Словарь с информацией о товарах
-
-    Raises:
-        requests.exceptions.Error: Возможны исключения
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -52,9 +49,6 @@ def update_stocks(stocks, campaign_id, access_token):
 
     Returns:
         response_object(dict): Словарь со статусом подтверждения обновления
-
-    Raises:
-        requests.exceptions.Error: Возможны исключения
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -81,9 +75,6 @@ def update_price(prices, campaign_id, access_token):
 
     Returns:
         response_object(dict): Словарь со статусом подтверждения обновления
-
-    Raises:
-        requests.exceptions.Error: Возможны исключения
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
