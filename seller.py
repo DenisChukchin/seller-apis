@@ -128,9 +128,6 @@ def download_stock():
 
     Returns:
         watch_remnants(dict): Словарь, который содержит актуальные артикулы, остатки и цены
-
-    Raises:
-        TypeError: Ошибка файла ostatki
     """
     # Скачать остатки с сайта
     casio_url = "https://timeworld.ru/upload/files/ostatki.zip"
@@ -215,8 +212,6 @@ def price_conversion(price: str) -> str:
         price(str): Цена с дробной частью и с припиской руб
     Returns:
           str: Цена в виде целого числа
-    Raises:
-        ValueError: price must be str, not int
     Examples:
         >>> price_conversion("5'990.00 руб.")
         >>> "5990"
@@ -233,9 +228,6 @@ def divide(lst: list, n: int):
 
     Returns:
         list: Список, который разделен на n-частей
-
-    Raises:
-        ValueError: n must be int, not str
     """
     for i in range(0, len(lst), n):
         yield lst[i : i + n]
