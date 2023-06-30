@@ -22,6 +22,9 @@ def get_product_list(last_id, client_id, seller_token):
     Returns:
         dict: Словарь с информацией о товарах
 
+    Raises:
+        requests.exceptions.HTTPError: Ошибка отклика с сервера
+
     Example:
         >>> env = Env()
         >>> get_product_list("", env.str("CLIENT_ID"), env.str("SELLER_TOKEN"))
@@ -55,6 +58,9 @@ def get_offer_ids(client_id, seller_token):
     Returns:
         offer_ids(list): Список с артикулами товара продавца
 
+    Raises:
+        requests.exceptions.HTTPError: Ошибка отклика с сервера
+
     Example:
         >>> env = Env()
         >>> get_offer_ids(, env.str("CLIENT_ID"), env.str("SELLER_TOKEN"))
@@ -87,6 +93,9 @@ def update_price(prices: list, client_id, seller_token):
         dict: Словарь в котором указаны данные, например,
             как идентификатор товара, артикул товара, подтверждение об обновлении и
             возможные ошибки
+
+    Raises:
+        requests.exceptions.HTTPError: Ошибка отклика с сервера
     """
     url = "https://api-seller.ozon.ru/v1/product/import/prices"
     headers = {
@@ -111,6 +120,9 @@ def update_stocks(stocks: list, client_id, seller_token):
         dict: Словарь в котором указаны данные, например,
             как идентификатор товара, артикул товара, подтверждение об обновлении и
             возможные ошибки
+
+    Raises:
+        requests.exceptions.HTTPError: Ошибка отклика с сервера
     """
     url = "https://api-seller.ozon.ru/v1/product/import/stocks"
     headers = {
@@ -128,6 +140,9 @@ def download_stock():
 
     Returns:
         watch_remnants(dict): Словарь, который содержит актуальные артикулы, остатки и цены
+
+    Raises:
+        requests.exceptions.HTTPError: Ошибка отклика с сервера
     """
     # Скачать остатки с сайта
     casio_url = "https://timeworld.ru/upload/files/ostatki.zip"
@@ -245,6 +260,9 @@ async def upload_prices(watch_remnants, client_id, seller_token):
         prices(list): Список из словарей, в котором указаны данные, такие как
             идентификатор товара, артикул товара, подтверждение об обновлении и
             возможные ошибки
+
+    Raises:
+        requests.exceptions.HTTPError: Ошибка отклика с сервера
     """
     offer_ids = get_offer_ids(client_id, seller_token)
     prices = create_prices(watch_remnants, offer_ids)
@@ -267,6 +285,9 @@ async def upload_stocks(watch_remnants, client_id, seller_token):
         stocks(list): Список из словарей, в котором указаны данные, такие как
             идентификатор товара, артикул товара, подтверждение об обновлении и
             возможные ошибки
+
+    Raises:
+        requests.exceptions.HTTPError: Ошибка отклика с сервера
     """
     offer_ids = get_offer_ids(client_id, seller_token)
     stocks = create_stocks(watch_remnants, offer_ids)

@@ -20,6 +20,9 @@ def get_product_list(page, campaign_id, access_token):
 
     Results:
         dict: Словарь с информацией о товарах
+
+    Raises:
+        requests.exceptions.HTTPError: Ошибка отклика с сервера
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -49,6 +52,9 @@ def update_stocks(stocks, campaign_id, access_token):
 
     Returns:
         response_object(dict): Словарь со статусом подтверждения обновления
+
+    Raises:
+        requests.exceptions.HTTPError: Ошибка отклика с сервера
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -75,6 +81,9 @@ def update_price(prices, campaign_id, access_token):
 
     Returns:
         response_object(dict): Словарь со статусом подтверждения обновления
+
+    Raises:
+        requests.exceptions.HTTPError: Ошибка отклика с сервера
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -100,6 +109,9 @@ def get_offer_ids(campaign_id, market_token):
 
     Results:
         offer_ids(list): Список с артикулами товара продавца
+
+    Raises:
+        requests.exceptions.HTTPError: Ошибка отклика с сервера
     """
     page = ""
     product_list = []
@@ -214,6 +226,9 @@ async def upload_prices(watch_remnants, campaign_id, market_token):
 
     Returns:
         prices(list): Список со статусами подтверждения обновления
+
+    Raises:
+        requests.exceptions.HTTPError: Ошибка отклика с сервера
     """
     offer_ids = get_offer_ids(campaign_id, market_token)
     prices = create_prices(watch_remnants, offer_ids)
@@ -234,6 +249,9 @@ async def upload_stocks(watch_remnants, campaign_id, market_token, warehouse_id)
         not_empty(list): Список в котором указана информация о товаре,
             который остался в запасе
         stocks(list): Список с остатками продукции
+
+    Raises:
+        requests.exceptions.HTTPError: Ошибка отклика с сервера
     """
     offer_ids = get_offer_ids(campaign_id, market_token)
     stocks = create_stocks(watch_remnants, offer_ids, warehouse_id)
